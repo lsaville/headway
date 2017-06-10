@@ -15,6 +15,13 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:password_confirmation) }
   end
 
+  context '#print_roles' do
+    it 'Prints all the roles of a given user' do
+      user = create(:user, :admin)
+      expect(user.print_roles).to eq("Admin")
+    end
+  end
+
   context '#tester?' do
     ['example.com', 'headway.io'].each do |domain|
       it "an email including the #{domain} domain is a tester" do
