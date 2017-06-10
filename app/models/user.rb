@@ -33,6 +33,10 @@ class User < ApplicationRecord
     (email =~ /(example.com|headway.io)$/).present?
   end
 
+  def print_roles
+    self.roles.to_a.map { |role| role.capitalize }.join(", ")
+  end
+
   private
 
   def generate_uuid
