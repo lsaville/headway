@@ -9,9 +9,9 @@ RSpec.describe Admin::UsersController, type: :request do
 
   describe '#new' do
     context 'admin' do
-      it 'loads a form to create a user' do
+      it 'loads the page to create a user' do
         sign_in(admin_user)
-        get edit_admin_user_path(user)
+        get new_admin_user_path
         expect(response).to be_success
       end
     end
