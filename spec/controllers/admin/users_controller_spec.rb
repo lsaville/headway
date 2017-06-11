@@ -4,9 +4,6 @@ RSpec.describe Admin::UsersController, type: :request do
   let(:admin_user) { create(:user, :admin) }
   let(:user) { create(:user) }
 
-  describe '#create' do
-  end
-
   describe '#new' do
     context 'admin' do
       it 'loads the page to create a user' do
@@ -14,14 +11,56 @@ RSpec.describe Admin::UsersController, type: :request do
         get new_admin_user_path
         expect(response).to be_success
       end
+
+      it 'creates a user and redirects to the index' do
+        sign_in(admin_user)
+
+        new_user_data = {first_name: 'Michael',
+                         last_name: 'Jackson',
+                         email: 'mj@example.com',
+                         password: 'lkjfdsa321',
+                         password_confirmation: 'lkjfdsa321'}
+
+        post admin_users_path(user: new_user_data)
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(admin_users_path)
+      end
+
+      it 'redirects back without a validated field' do
+        sign_in(admin_user)
+
+        new_user_data = {first_name: 'Michael',
+                         last_name: 'Jackson',
+                         password: 'lkjfdsa321',
+                         password_confirmation: 'lkjfdsa321'}
+
+        post admin_users_path(user: new_user_data)
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(new_admin_user_path)
+      end
     end
 
     context 'user' do
-      #sad path
+      it 'redirects the unauthorized user' do
+        sign_in(user)
+        get admin_users_path
+        expect(response).to be_redirect
+
+        txt = 'You must be an admin to perform that action'
+        expect(flash[:alert]).to eq(txt)
+      end
     end
 
     context 'NOT authenticated' do
-      #sad path
+      it 'redirects to sign in page with an alert' do
+        get admin_users_path
+        expect(response).to be_redirect
+
+        txt = 'You need to sign in or sign up before continuing.'
+        expect(flash[:alert]).to eq(txt)
+      end
     end
   end
 
