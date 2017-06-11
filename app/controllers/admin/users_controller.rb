@@ -3,6 +3,22 @@ module Admin
     skip_before_action :require_admin!, only: [:stop_impersonating]
     respond_to :html, :json
 
+    def update
+      @user = User.find(params[:id])
+      if @user.update(user_params)
+        flash[:success] = "Successfully updated #{@user.email}!"
+        redirect_to admin_users_path
+      else
+        flash[:error] = "Something went wrong!"
+        redirect_to edit_admin_user_path(@user)
+      end
+    end
+
+    def edit
+      @user = User.find(params[:id])
+      @roles = User.valid_roles
+    end
+
     def new
       @user = User.new
       @roles = User.valid_roles
