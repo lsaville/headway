@@ -4,8 +4,21 @@ module Admin
     respond_to :html, :json
 
     def new
+      @user = User.new
+      @roles = User.valid_roles
     end
-    
+
+    def create
+      @user = User.create(user_params)
+      if @user.save
+        flash[:success] = "Successfully created user: #{@user.email}!"
+        redirect_to admin_users_path
+      else
+        flash[:error] = "Something went wrong!"
+        redirect_to new_admin_user_path
+      end
+    end
+
     def index
       @users = User.all
 
@@ -26,6 +39,10 @@ module Admin
     end
 
     private
+
+    def user_params
+      params.require(:user).permit({roles: []}, :first_name, :last_name, :password, :password_confirmation, :email)
+    end
 
     def track_impersonation(user, status)
       analytics_track(
