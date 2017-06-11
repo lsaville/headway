@@ -3,6 +3,9 @@ module Admin
     skip_before_action :require_admin!, only: [:stop_impersonating]
     respond_to :html, :json
 
+    def new
+    end
+    
     def index
       @users = User.all
 
