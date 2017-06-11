@@ -4,6 +4,27 @@ RSpec.describe Admin::UsersController, type: :request do
   let(:admin_user) { create(:user, :admin) }
   let(:user) { create(:user) }
 
+  describe '#create' do
+  end
+
+  describe '#new' do
+    context 'admin' do
+      it 'loads a form to create a user' do
+        sign_in(admin_user)
+        get edit_admin_user_path(user)
+        expect(response).to be_success
+      end
+    end
+
+    context 'user' do
+      #sad path
+    end
+
+    context 'NOT authenticated' do
+      #sad path
+    end
+  end
+
   describe '#index' do
     context 'authenticated' do
       context 'admin' do
