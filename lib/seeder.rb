@@ -20,7 +20,7 @@ module Seeder
     create(:user)
 
     # list user traits from factory_girl here
-    %w[admin].each do |name|
+    %w[admin principle].each do |name|
       create(:user, name.to_sym)
     end
   end
