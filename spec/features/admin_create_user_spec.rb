@@ -7,8 +7,7 @@ feature 'Create user as an admin' do
     sign_in(user.email, user.password)
     visit new_admin_user_path
 
-    expect(page).to have_content("Email")
-    expect(page).to have_content("Password")
-    expect(page).to have_content("Roles")
+    expect(page).to have_content('Email')
+    expect(page).to have_content('Roles')
   end
 end

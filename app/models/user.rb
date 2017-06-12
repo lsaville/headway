@@ -34,7 +34,7 @@ class User < ApplicationRecord
   end
 
   def print_roles
-    self.roles.to_a.map { |role| role.capitalize }.join(", ")
+    roles.to_a.map(&:capitalize).join(', ')
   end
 
   private

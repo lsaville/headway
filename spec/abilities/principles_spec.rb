@@ -3,6 +3,7 @@ require 'cancan/matchers'
 
 describe Canard::Abilities, '#principles' do
   let(:acting_principle) { FactoryGirl.create(:user, :principle) }
+
   subject(:principle_ability) { Ability.new(acting_principle) }
 
   describe 'on User' do

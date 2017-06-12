@@ -9,7 +9,7 @@ module Admin
         flash[:success] = "Successfully updated #{@user.email}!"
         redirect_to admin_users_path
       else
-        flash[:error] = "Something went wrong!"
+        flash[:error] = 'Something went wrong!'
         redirect_to edit_admin_user_path(@user)
       end
     end
@@ -30,7 +30,7 @@ module Admin
         flash[:success] = "Successfully created user: #{@user.email}!"
         redirect_to admin_users_path
       else
-        flash[:error] = "Something went wrong!"
+        flash[:error] = 'Something went wrong!'
         redirect_to new_admin_user_path
       end
     end
@@ -57,7 +57,12 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit({roles: []}, :first_name, :last_name, :password, :password_confirmation, :email)
+      params.require(:user).permit({ roles: [] },
+                                   :first_name,
+                                   :last_name,
+                                   :password,
+                                   :password_confirmation,
+                                   :email)
     end
 
     def track_impersonation(user, status)

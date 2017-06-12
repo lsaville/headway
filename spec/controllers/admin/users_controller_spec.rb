@@ -15,7 +15,7 @@ RSpec.describe Admin::UsersController, type: :request do
       it 'updates the user and redirects to the index' do
         sign_in(admin_user)
 
-        updated_user_data = {email: 'meow@example.com'}
+        updated_user_data = { email: 'meow@example.com' }
 
         put admin_user_path(user, user: updated_user_data)
 
@@ -57,11 +57,11 @@ RSpec.describe Admin::UsersController, type: :request do
       it 'creates a user and redirects to the index' do
         sign_in(admin_user)
 
-        new_user_data = {first_name: 'Michael',
-                         last_name: 'Jackson',
-                         email: 'mj@example.com',
-                         password: 'lkjfdsa321',
-                         password_confirmation: 'lkjfdsa321'}
+        new_user_data = { first_name: 'Michael',
+                          last_name: 'Jackson',
+                          email: 'mj@example.com',
+                          password: 'lkjfdsa321',
+                          password_confirmation: 'lkjfdsa321' }
 
         post admin_users_path(user: new_user_data)
 
@@ -72,10 +72,10 @@ RSpec.describe Admin::UsersController, type: :request do
       it 'redirects back without a validated field' do
         sign_in(admin_user)
 
-        new_user_data = {first_name: 'Michael',
-                         last_name: 'Jackson',
-                         password: 'lkjfdsa321',
-                         password_confirmation: 'lkjfdsa321'}
+        new_user_data = { first_name: 'Michael',
+                          last_name: 'Jackson',
+                          password: 'lkjfdsa321',
+                          password_confirmation: 'lkjfdsa321' }
 
         post admin_users_path(user: new_user_data)
 

@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
   context '#print_roles' do
     it 'Prints all the roles of a given user' do
       user = create(:user, :admin)
-      expect(user.print_roles).to eq("Admin")
+      expect(user.print_roles).to eq('Admin')
     end
   end
 
