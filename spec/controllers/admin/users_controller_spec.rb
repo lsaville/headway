@@ -4,7 +4,49 @@ RSpec.describe Admin::UsersController, type: :request do
   let(:admin_user) { create(:user, :admin) }
   let(:user) { create(:user) }
 
-  describe '#new' do
+  describe '#edit and #update' do
+    context 'admin' do
+      it 'loads the page to update a user' do
+        sign_in(admin_user)
+        get edit_admin_user_path(user)
+        expect(response).to be_success
+      end
+
+      it 'updates the user and redirects to the index' do
+        sign_in(admin_user)
+
+        updated_user_data = {email: 'meow@example.com'}
+
+        put admin_user_path(user, user: updated_user_data)
+
+        expect(response.status).to eq 302
+        expect(response).to redirect_to(admin_users_path)
+      end
+    end
+
+    context 'user' do
+      it 'redirects the unauthorized user' do
+        sign_in(user)
+        get admin_users_path
+        expect(response).to be_redirect
+
+        txt = 'You must be an admin to perform that action'
+        expect(flash[:alert]).to eq(txt)
+      end
+    end
+
+    context 'NOT authenticated' do
+      it 'redirects to sign in page with an alert' do
+        get admin_users_path
+        expect(response).to be_redirect
+
+        txt = 'You need to sign in or sign up before continuing.'
+        expect(flash[:alert]).to eq(txt)
+      end
+    end
+  end
+
+  describe '#new and #create' do
     context 'admin' do
       it 'loads the page to create a user' do
         sign_in(admin_user)
