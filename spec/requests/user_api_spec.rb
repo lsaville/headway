@@ -135,7 +135,7 @@ describe 'User API endpoints' do
 
   describe 'Update the user via the API', type: :request do
     context 'with token authentication via query params' do
-      it 'returns status code 2--' do
+      it 'returns status code 204' do
         updated_user_data = {email: 'alejandro@example.com'}
 
         put api_v1_user_url(user_email: @user.email,
