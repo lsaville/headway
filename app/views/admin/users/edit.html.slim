@@ -1,0 +1,31 @@
+h1
+  | Update a User
+
+= form_for(@user, url: admin_user_path(@user), method: :put) do |f|
+  div.field
+    = f.label :first_name
+    br
+    = f.text_field :first_name
+  div.field
+    = f.label :last_name
+    br
+    = f.text_field :last_name
+  div.field
+    = f.label :email
+    br
+    = f.text_field :email
+  div.field
+    = f.label :password
+    br
+    = f.password_field :password
+  div.field
+    = f.label :password_confirmation
+    br
+    = f.password_field :password_confirmation
+  div.field
+    label Roles
+    - @roles.each do |role|
+      = f.label role
+      = f.check_box :roles, {multiple: true }, role
+  div.actions
+    = f.submit
